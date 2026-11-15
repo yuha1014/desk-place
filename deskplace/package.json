@@ -1,0 +1,12 @@
+{
+  "name": "deskplace",
+  "productName": "DeskPlace",
+  "version": "0.1.4",
+  "description": "A calm, interactive desktop workspace for macOS",
+  "private": true,
+  "scripts": {
+    "start": "open dist/DeskPlace.app",
+    "dev": "bash scripts/build-macos.sh && open dist/DeskPlace.app",
+    "dist:mac": "bash scripts/build-macos.sh"
+  }
+}

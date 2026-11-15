@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; frame-src file:;">
+  <title>DeskPlace</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./renderer.js"></script>
+</head>
+<body>
+  <main class="workspace" aria-label="DeskPlace workspace">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">d</span><span>deskplace</span></div>
+      <div class="topbar-right"><span class="saved-indicator"><i></i> 이 기기에 저장됨</span><button class="action-button" id="open-html">배경 HTML 선택</button><button class="action-button desktop-button" id="show-desktop">바탕화면 보기</button><button class="settings-button" id="settings-toggle" aria-label="환경 설정">⚙</button></div>
+    </header>
+
+    <section class="hero panel" data-panel="hero">
+      <div class="panel-heading drag-handle"><span class="eyebrow">오늘의 중심</span><span class="grip">⠿</span></div>
+      <div class="hero-content">
+        <p class="date-line" id="date-line"></p>
+        <h1 contenteditable="true" spellcheck="false" data-save="focus">오늘은 중요한 일에<br>차분히 집중하기</h1>
+        <p class="hero-hint">문장을 눌러 오늘의 포커스를 적어보세요</p>
+      </div>
+      <div class="hero-bottom"><span class="sun-icon">✳</span><span>작은 진전도 충분히 의미 있어요.</span></div>
+    </section>
+
+    <section class="clock panel" data-panel="clock">
+      <div class="panel-heading drag-handle"><span class="eyebrow">현재 시각</span><span class="grip">⠿</span></div>
+      <div class="clock-time" id="clock-time">--:--</div>
+      <div class="clock-date" id="clock-date"></div>
+      <div class="clock-rule"></div>
+      <div class="clock-foot"><span class="clock-dot"></span> 지금 이 순간</div>
+    </section>
+
+    <section class="notes panel" data-panel="notes">
+      <div class="panel-heading drag-handle"><div><span class="eyebrow">생각 보관함</span><h2>메모</h2></div><span class="grip">⠿</span></div>
+      <textarea id="notes-input" placeholder="떠오르는 생각을 자유롭게 적어보세요…" aria-label="메모"></textarea>
+      <div class="panel-foot"><span>자동 저장</span><span class="note-count" id="note-count">0자</span></div>
+    </section>
+
+    <section class="todos panel" data-panel="todos">
+      <div class="panel-heading drag-handle"><div><span class="eyebrow">하나씩 해내기</span><h2>할 일 <span class="task-total" id="task-total">0</span></h2></div><span class="grip">⠿</span></div>
+      <form class="todo-form" id="todo-form"><input id="todo-input" maxlength="100" placeholder="새로운 할 일 추가" autocomplete="off" aria-label="새로운 할 일"><button aria-label="할 일 추가">＋</button></form>
+      <ul class="todo-list" id="todo-list"></ul>
+      <div class="empty-todos" id="empty-todos">오늘 할 일을 하나 추가해 볼까요?</div>
+    </section>
+
+    <section class="settings panel hidden" id="settings-panel">
+      <div class="panel-heading"><div><span class="eyebrow">DESKPLACE</span><h2>환경 설정</h2></div><button class="close-button" id="settings-close" aria-label="닫기">×</button></div>
+      <label class="setting-row"><span><b>로그인 시 시작</b><small>Mac에 로그인하면 DeskPlace를 엽니다</small></span><input id="launch-toggle" type="checkbox"><i class="switch"></i></label>
+      <label class="setting-row"><span><b>24시간 계속 켜두기</b><small>앱이 보이는 동안 화면과 Mac 잠자기 방지 · 전원 연결 권장</small></span><input id="keep-awake-toggle" type="checkbox" checked><i class="switch"></i></label>
+      <label class="setting-row"><span><b>화면 위쪽까지 배경 표시</b><small>사용 중 메뉴 막대와 Dock 자동 숨김 · 가장자리에서 다시 표시</small></span><input id="edge-to-edge-toggle" type="checkbox"><i class="switch"></i></label>
+      <p class="settings-note" id="login-support"></p>
+      <div class="settings-divider"></div>
+      <h3 class="widget-settings-title">위젯 표시와 크기</h3>
+      <p class="settings-note">숨길 위젯은 체크를 끄고, 크기는 슬라이더로 조절하세요.</p>
+      <div class="panel-color-settings">
+        <label><input id="match-wallpaper-color" type="checkbox" checked><span>HTML 배경색에 맞추기</span></label>
+        <input id="manual-panel-color" type="color" value="#fffaf4" aria-label="위젯 배경색 직접 선택">
+      </div>
+      <p class="settings-note">단색 배경은 자동으로 읽습니다. 사진·그라데이션은 색상 칸에서 직접 맞출 수 있습니다.</p>
+      <div class="wallpaper-scale-setting">
+        <label for="wallpaper-scale"><b>HTML 배경 크기</b><output id="wallpaper-scale-output">100%</output></label>
+        <input id="wallpaper-scale" type="range" min="50" max="150" step="5" value="100">
+        <small>축소하면 남는 공간을 HTML 배경색으로 채웁니다.</small>
+      </div>
+      <div class="widget-settings">
+        <div class="widget-setting" data-widget-setting="hero"><label><input class="widget-visible" type="checkbox"><span>오늘의 중심</span></label><input class="widget-scale" type="range" min="55" max="130" step="5" value="85" aria-label="오늘의 중심 크기"><output>85%</output></div>
+        <div class="widget-setting" data-widget-setting="clock"><label><input class="widget-visible" type="checkbox"><span>현재 시각</span></label><input class="widget-scale" type="range" min="55" max="130" step="5" value="85" aria-label="현재 시각 크기"><output>85%</output></div>
+        <div class="widget-setting" data-widget-setting="notes"><label><input class="widget-visible" type="checkbox"><span>생각 보관함</span></label><input class="widget-scale" type="range" min="55" max="130" step="5" value="85" aria-label="생각 보관함 크기"><output>85%</output></div>
+        <div class="widget-setting" data-widget-setting="todos"><label><input class="widget-visible" type="checkbox"><span>하나씩 해내기</span></label><input class="widget-scale" type="range" min="55" max="130" step="5" value="85" aria-label="하나씩 할 일 크기"><output>85%</output></div>
+      </div>
+      <button class="reset-wallpaper" id="reset-wallpaper">기본 배경으로 되돌리기</button>
+      <div class="settings-divider"></div>
+      <p class="settings-note">HTML 배경은 직접 클릭하고 입력할 수 있습니다. 패널 제목을 드래그해 위치를 바꾸세요. 패널이 배경의 버튼을 가리면 해당 위젯을 숨길 수 있습니다.</p>
+    </section>
+
+    <footer class="workspace-footer"><span>나만의 데스크 공간</span><span>✦</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key><string>ko</string>
+  <key>CFBundleExecutable</key><string>DeskPlace</string>
+  <key>CFBundleIdentifier</key><string>com.deskplace.app</string>
+  <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+  <key>CFBundleName</key><string>DeskPlace</string>
+  <key>CFBundlePackageType</key><string>APPL</string>
+  <key>CFBundleSupportedPlatforms</key><array><string>MacOSX</string></array>
+  <key>LSArchitecturePriority</key><array><string>arm64</string></array>
+  <key>CFBundleShortVersionString</key><string>0.1.4</string>
+  <key>CFBundleVersion</key><string>5</string>
+  <key>LSMinimumSystemVersion</key><string>13.0</string>
+  <key>NSHighResolutionCapable</key><true/>
+  <key>NSPrincipalClass</key><string>NSApplication</string>
+  <key>NSAppleEventsUsageDescription</key><string>DeskPlace shows the desktop and hides other apps when requested.</string>
+  <key>NSDocumentTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleTypeName</key><string>HTML Document</string>
+      <key>CFBundleTypeRole</key><string>Viewer</string>
+      <key>LSHandlerRank</key><string>Alternate</string>
+      <key>CFBundleTypeExtensions</key><array><string>html</string><string>htm</string></array>
+      <key>LSItemContentTypes</key><array><string>public.html</string></array>
+    </dict>
+  </array>
+</dict>
+</plist>
